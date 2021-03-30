@@ -15,3 +15,9 @@ export type ISnapshot = firebase.firestore.QuerySnapshot<firebase.firestore.Docu
 export type IDocument = firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>;
 export const db = firebase.firestore();
 
+export const auth = firebase.auth();
+export const provider = new firebase.auth.GoogleAuthProvider();
+
+
+
+

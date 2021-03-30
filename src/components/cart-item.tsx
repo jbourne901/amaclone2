@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) => {
             alignItems: "flex-start",
             justifyContent: "space-between",
             width: "100%",
+            borderBottom: "1px solid #DDD",
         },
         left: {
             flex: 1,
@@ -73,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-start",
-            alignItems: "flex-start",
+            alignItems: "center",
             marginTop: "4px",
         },
         price: {
@@ -81,7 +82,15 @@ const useStyles = makeStyles((theme: Theme) => {
             fontWeight: 700,
             marginLeft: "16px",
         },
+        qtyContainer: {
+
+        },
         qty: {
+            borderRadius: "7px",
+            backgroundColor: "#f0f2f2",
+            padding: "8px",
+            boxShadow: "0 2px 5px rgba(15,17,17, .15)",
+            outline: 0,
         },
         delete: {
             color: "#007185",
@@ -115,6 +124,18 @@ export const CartItem = (props: ICartItemProps) => {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            const cartItem = db.collection("cartItems").doc(item.id);
+            const doc = await cartItem.get();
+            if(doc.exists) {
+                cartItem.delete();
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    };
+
     const jsxQtyOptions: JSX.Element[] = [];
     for(let i=1; i<10; i++) {
         jsxQtyOptions.push((
@@ -133,12 +154,12 @@ export const CartItem = (props: ICartItemProps) => {
                         <h2 className={classes.name}>{item.name}</h2>
                     </div>
                     <div className={classes.bottom}>
-                        <div className={classes.qty}>
-                            <select value={item.qty} onChange={handleChangeQty}>
+                        <div className={classes.qtyContainer}>
+                            <select value={item.qty} onChange={handleChangeQty} className={classes.qty}>
                                 {jsxQtyOptions}
                             </select>
                         </div>
-                        <div className={classes.delete}>
+                        <div className={classes.delete} onClick={handleDelete}>
                             Delete
                         </div>
                     </div>

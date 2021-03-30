@@ -3,6 +3,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import {useHistory} from "react-router";
+import {IUser} from "../types/user";
 
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -92,11 +93,20 @@ const useStyles = makeStyles((theme: Theme) => {
             paddingLeft: "4px",
             color: "#f08804",
             fontWeight: 700,
+        },
+        nameLink: {
+            color: "white",
         }
     }
 });
 
-export const Header = () => {
+export interface IHeaderProps {
+    cartQty: number;
+    user: IUser|undefined;
+    onLogout: () => void;
+}
+
+export const Header = (props: IHeaderProps) => {
     const classes = useStyles();
 
     const history = useHistory();
@@ -106,6 +116,20 @@ export const Header = () => {
     const handleLogoClick = () => {
         history.push("/");
     };
+    const handleLogout = () => {
+        props.onLogout();
+    };
+
+    console.log(`Header render user=${props.user?.displayName}`, props.user)
+
+    let jsxName;
+    if(props.user) {
+        jsxName = (
+            <a href={"#"} onClick={handleLogout} className={classes.nameLink}>Hello, {props.user.displayName}</a>
+        );
+    }
+
+    console.dir(jsxName)
 
     return (
         <div className={classes.header}>
@@ -115,7 +139,7 @@ export const Header = () => {
             <div className={classes.optionAddress}>
                 <LocationOnIcon />
                 <div className={classes.option}>
-                    <span className={classes.optionLine1}>Hello, </span>
+                    <span className={classes.optionLine1}>Hello</span>
                     <span className={classes.optionLine2}>Select your address</span>
                 </div>
             </div>
@@ -128,7 +152,7 @@ export const Header = () => {
             <div className={classes.nav}>
                 <div className={classes.option}>
                     <div className={classes.optionLine1}>
-                        Hello, John
+                        {jsxName}
                     </div>
                     <div className={classes.optionLine2}>
                         Account & Lists
@@ -145,7 +169,7 @@ export const Header = () => {
                 <div className={classes.cart} onClick={handleCartClick}>
                     <ShoppingBasketIcon />
                     <div className={classes.cartCount}>
-                        3
+                        {props.cartQty}
                     </div>
                 </div>
             </div>

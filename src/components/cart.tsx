@@ -9,12 +9,15 @@ const useStyles = makeStyles((theme: Theme) => {
             width: "100%",
             display: "flex",
             marginTop: "18px",
+            alignItems: "flex-start",
         }
     }
 });
 
 export interface ICartProps {
     items: ICartItem[];
+    cartQty: number;
+    cartTotal: number;
 }
 
 export const Cart = (props: ICartProps) => {
@@ -22,7 +25,7 @@ export const Cart = (props: ICartProps) => {
     return (
         <div className={classes.container}>
             <CartItems items={props.items}/>
-            <CartTotal />
+            <CartTotal cartQty={props.cartQty} cartTotal={props.cartTotal}/>
         </div>
     );
 }
