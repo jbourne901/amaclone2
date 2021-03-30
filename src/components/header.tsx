@@ -8,6 +8,7 @@ import {useHistory} from "react-router";
 const useStyles = makeStyles((theme: Theme) => {
     return {
         header: {
+            width: "100%",
             height: "60px",
             backgroundColor: "#0f1111",
             display: "flex",
@@ -15,7 +16,6 @@ const useStyles = makeStyles((theme: Theme) => {
             alignItems: "center",
             justifyContent: "space-between",
             color: "white",
-            width: "100%",
         },
         logo: {
             display: "flex",
@@ -85,11 +85,13 @@ const useStyles = makeStyles((theme: Theme) => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            paddingRight: "9px",
+            paddingRight: "20px",
             cursor: "pointer",
         },
         cartCount: {
             paddingLeft: "4px",
+            color: "#f08804",
+            fontWeight: 700,
         }
     }
 });
